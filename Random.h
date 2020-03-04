@@ -10,7 +10,7 @@
 
 	inline uint64_t Random_Consume(union Random *a) {
 		a->seed *= 0xDA942042E4DD58B5;
-		return (a->seed >> 64);
+		return (uint64_t) (a->seed >> 64);
 	}
 
 	inline uint64_t Random_Consume_Range(union Random *a, uint64_t max) {
