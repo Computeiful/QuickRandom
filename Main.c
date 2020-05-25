@@ -1,6 +1,7 @@
-#include "Random.h"
 #include <stdio.h>
 #include <time.h>
+
+#include "Random.h"
 
 int main(void) {
 	union Random a;
