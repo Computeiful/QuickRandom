@@ -31,8 +31,12 @@
 	}
 
 	static double Random_Uniform(union Random *a) { // Value between 0.0 and 1.0, mean of 0.5
-		const uint64_t map = 0x3FF0000000000000ULL | (Random(a) >> 12);
-		return (*((double *) &map) - 1.0);
+		union {
+			uint64_t u64;
+			double f64;
+		} map;
+		map.u64 = 0x3FF0000000000000ULL | (Random(a) >> 12); // IEEE-754 abuse
+		return (map.f64 - 1.0);
 	}
 
 	static double Random_Gaussian(union Random *a) { // Normal value, mean of 0.0, s.d. of 1.0 (values cannot exceed 6.0 or -6.0)
