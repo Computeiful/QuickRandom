@@ -25,7 +25,7 @@
 		return (n % max);
 	}
 
-	static uint64_t Random_Between(union Random *a, uint64_t min, uint64_t max) {
+	static uint64_t Random_Between(union Random *a, uint64_t min, uint64_t max) { 
 		assert(max > min);
 		return Random_Range(a, max - min) + min;
 	}
