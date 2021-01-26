@@ -30,12 +30,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-void check(union Lean *a) { 
+#ifndef NDEBUG
+static void check(union Lean *a) { 
 	// Check the header for the expected values and bounds of each call
 
-	for(uint64_t i = 0; i < 1000; i++) {
-		const uint64_t n = Lean_Range(a, i + 1);
-		assert(n <= i + 1);
+	for(uint64_t i = 1; i < 1000; i++) {
+		const uint64_t n = Lean_Range(a, i);
+		assert(n < i);
 	}
 
 	for(int i = 0; i < 10000; i++) {
@@ -45,12 +46,12 @@ void check(union Lean *a) {
 
 	for(int i = 0; i < 1000; i++) {
 		double n = Lean_Uniform(a);
-		assert(n >= 0 && n <= 1);
+		assert(n >= 0.0 && n <= 1.0);
 	}
 
 	for(int i = 0; i < 1000; i++) {
 		double n = Lean_Gaussian(a);
-		assert(n >= -6 && n <= 6);
+		assert(n >= -6.0 && n <= 6.0);
 	}
 
 	// Random array test
@@ -70,21 +71,24 @@ void check(union Lean *a) {
 		}
 	}
 
-	assert(freq <= 1); // More than 1 zero could happen, but would be very rare 
+	assert(freq <= 2); // More than two zeroes could happen, but would be very rare
 }
+#endif
 
 int main(void) {
 	union Lean a;
 	a.seed = 1; 
 	Lean(&a); // Needed when the seed has a low value (such as above)
-	assert(Lean(&a) == 0xBAA09CA73F3265B4); // Correctness check
+	assert(Lean(&a) == 0xBAA09CA73F3265B4); // Correctness check, known good value
 
-	a.seed = (__uint128_t) time(NULL);
+	a.seed = (__uint128_t) time(NULL); // An "okay" source of randomness
 	Lean(&a);
 
 	for(int i = 0; i < 10; i++) {
 		printf("%08X\n", (int) Lean(&a));
 	}
 
+	#ifndef NDEBUG
 	check(&a);
+	#endif
 }
