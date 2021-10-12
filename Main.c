@@ -78,11 +78,11 @@ static void check(union Lean *a) {
 int main(void) {
 	union Lean a;
 	a.seed = 1; 
-	Lean(&a); // Needed when the seed has a low value (such as above)
-	assert(Lean(&a) == 0xBAA09CA73F3265B4); // Correctness check, known good value
+	Lean(&a); // Needed when the seed has a low number value (such as above)
+	assert(Lean(&a) == 0xBAA09CA73F3265B4); // Correctness check, known good value (when seed = 1)
 
-	a.seed = (__uint128_t) time(NULL); // An "okay" source of randomness
-	Lean(&a);
+	// a.seed = (__uint128_t) time(NULL); // An "okay" source of randomness
+	// Lean(&a);
 
 	for(int i = 0; i < 10; i++) {
 		printf("%08X\n", (int) Lean(&a));
