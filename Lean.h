@@ -19,5 +19,7 @@
 	void Lean_Copy(union Lean *, void *, const size_t size); // Copy random bytes onto the array
 	double Lean_Uniform(union Lean *); // Value between 0.0 and 1.0, mean of 0.5
 	double Lean_Gaussian(union Lean *); // Normal value, mean of 0.0, s.d. of 1.0 (values cannot exceed +6.0 or -6.0, these are hyper-rare anyway)
+	float Lean_Uniformf(union Lean *); // Value between 0.0 and 1.0, mean of 0.5
+	float Lean_Gaussianf(union Lean *); // Normal value, mean of 0.0, s.d. of 1.0 (values cannot exceed +6.0 or -6.0, these are hyper-rare anyway)
 
 #endif

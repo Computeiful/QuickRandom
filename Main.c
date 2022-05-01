@@ -50,8 +50,18 @@ static void check(union Lean *a) {
 	}
 
 	for(int i = 0; i < 1000; i++) {
+		float n = Lean_Uniformf(a);
+		assert(n >= 0.0f && n <= 1.0f);
+	}
+
+	for(int i = 0; i < 1000; i++) {
 		double n = Lean_Gaussian(a);
 		assert(n >= -6.0 && n <= 6.0);
+	}
+
+	for(int i = 0; i < 1000; i++) {
+		float n = Lean_Gaussianf(a);
+		assert(n >= -6.0f && n <= 6.0f);
 	}
 
 	// Random array test
